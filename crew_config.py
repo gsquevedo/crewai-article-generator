@@ -83,7 +83,8 @@ def criar_equipe(topico_usuario: str):
     tarefa_revisao = Task(
         description='Revise o artigo escrito pelo Redator, corrigindo erros gramaticais e melhorando a fluidez textual.',
         expected_output='Versão final do artigo revisada e pronta para publicação.',
-        agent=revisor
+        agent=revisor,
+        output_file='articles/new_post.md'
     )
 
     equipe = Crew(

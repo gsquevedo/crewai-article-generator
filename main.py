@@ -23,13 +23,13 @@ async def gerar_artigo(request: TópicoRequest):
         resultado = equipe.kickoff()
         artigo_str = str(resultado)
 
-        caminho_md = save_article_as_md(topico_usuario, artigo_str)
-        caminho_json = save_article_as_json(topico_usuario, artigo_str)
+        # caminho_md = save_article_as_md(topico_usuario, artigo_str)
+        #  caminho_json = save_article_as_json(topico_usuario, artigo_str)
 
         return ResultadoArtigo(
             status="sucesso",
             artigo=artigo_str,
-            detalhes=f"Arquivos salvos: {caminho_md}, {caminho_json}"
+            # detalhes=f"Arquivos salvos: {caminho_md}, {caminho_json}"
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao gerar o artigo: {str(e)}")
