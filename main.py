@@ -3,7 +3,6 @@ from pydantic import BaseModel
 from crew_config import criar_equipe
 from crewai import Agent, Crew, Task
 from typing import Optional
-from save_article import save_article_as_md, save_article_as_json
 
 app = FastAPI()
 
@@ -22,9 +21,6 @@ async def gerar_artigo(request: TópicoRequest):
         equipe = criar_equipe(topico_usuario)
         resultado = equipe.kickoff()
         artigo_str = str(resultado)
-
-        # caminho_md = save_article_as_md(topico_usuario, artigo_str)
-        #  caminho_json = save_article_as_json(topico_usuario, artigo_str)
 
         return ResultadoArtigo(
             status="sucesso",
