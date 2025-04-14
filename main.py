@@ -1,17 +1,39 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from crew_config import criar_equipe
+from crewai import Agent, Crew, Task
+from typing import Optional
+from save_article import save_article_as_md, save_article_as_json
 
 app = FastAPI()
 
-class TarefaInput(BaseModel):
+class TópicoRequest(BaseModel):
     topico: str
 
-@app.post("/executar")
-async def executar_crew(input_data: TarefaInput):
+class ResultadoArtigo(BaseModel):
+    status: str
+    artigo: str
+    detalhes: Optional[str] = None
+
+@app.post("/gerar_artigo/")
+async def gerar_artigo(request: TópicoRequest):
     try:
-        equipe = criar_equipe(input_data.topico)
+        topico_usuario = request.topico
+        equipe = criar_equipe(topico_usuario)
         resultado = equipe.kickoff()
-        return {"resultado": str(resultado.output)}
+        artigo_str = str(resultado)
+
+        caminho_md = save_article_as_md(topico_usuario, artigo_str)
+        caminho_json = save_article_as_json(topico_usuario, artigo_str)
+
+        return ResultadoArtigo(
+            status="sucesso",
+            artigo=artigo_str,
+            detalhes=f"Arquivos salvos: {caminho_md}, {caminho_json}"
+        )
     except Exception as e:
-        return {"erro": str(e)}
+        raise HTTPException(status_code=500, detail=f"Erro ao gerar o artigo: {str(e)}")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
