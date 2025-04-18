@@ -1,33 +1,33 @@
-from crewai import Agent, Task, Crew
+## @file
+#  @brief Criação de uma equipe de agentes com funções específicas para gerar um artigo baseado em um tópico.
+#  @details Este script utiliza a biblioteca CrewAI, modelos LLM do LangChain e uma ferramenta personalizada da Wikipedia
+#           para criar uma equipe composta por agentes com funções de pesquisa, redação e revisão de conteúdo.
+
+from crewai import Agent, Task, Crew 
 from langchain_community.chat_models import ChatLiteLLM
 from wikipedia_tool import WikipediaTool
 from dotenv import load_dotenv
 import os
 
-# Carrega as variáveis de ambiente a partir do arquivo .env.
+## @brief Carrega variáveis de ambiente do arquivo `.env`.
 load_dotenv()
 
-# Cria o modelo de linguagem LLM (Large Language Model) com uma chave API do Google.
+## @brief Inicializa o modelo de linguagem LLM com chave da API do Google.
 llm = ChatLiteLLM(
     model="gemini/gemini-1.5-flash",
     api_key=os.getenv("GOOGLE_API_KEY")
 )
 
-# Instancia a ferramenta do Wikipedia, que será usada pelo agente.
+## @brief Instancia a ferramenta da Wikipedia.
 wiki_tool = WikipediaTool()
 
-"""
-Cria uma equipe composta por três agentes (pesquisador, redator e revisor) com tarefas específicas
-para coletar, redigir e revisar um artigo baseado em um tópico fornecido.
 
-Este método configura os agentes para interagir com a Wikipedia e gerar um artigo sobre o tópico do usuário.
-
-@param topico_usuario: O tópico do artigo a ser gerado.
-@return: Instância da classe Crew que contém os agentes e tarefas configuradas.
-"""
+## @brief Cria uma equipe de agentes para gerar um artigo com base em um tópico fornecido.
+#  @param topico_usuario Tópico principal do artigo.
+#  @return Instância de Crew contendo os agentes e tarefas.
 def criar_equipe(topico_usuario: str):
     
-    # Criação do agente de pesquisa, que buscará informações na Wikipedia sobre o tópico.
+    ## @brief Agente responsável pela pesquisa do conteúdo.
     pesquisador = Agent(
         role='Pesquisador Especializado',
         goal=f'Coletar e resumir informações relevantes sobre "{topico_usuario}" com base na Wikipedia.',
@@ -46,7 +46,7 @@ def criar_equipe(topico_usuario: str):
         ]
     )
 
-    # Criação do agente redator, responsável por transformar o resumo em um artigo cativante.
+    ## @brief Agente encarregado de redigir o artigo de forma criativa.
     redator = Agent(
         role='Redator Criativo',
         goal=f'Escrever um artigo cativante de no mínimo 300 palavras sobre "{topico_usuario}" para um público de jovens adultos.',
@@ -65,7 +65,7 @@ def criar_equipe(topico_usuario: str):
         ]
     )
 
-    # Criação do agente revisor, que será responsável pela revisão gramatical e fluidez do artigo.
+    ## @brief Agente responsável por revisar o conteúdo final do artigo.
     revisor = Agent(
         role='Revisor Gramatical',
         goal='Revisar o artigo final, corrigindo erros gramaticais e garantindo coesão e coerência textual.',
@@ -84,19 +84,21 @@ def criar_equipe(topico_usuario: str):
         ]
     )
 
-    # Criação das tarefas para a equipe: pesquisa, redação e revisão.
+    ## @brief Tarefa atribuída ao pesquisador.
     tarefa_pesquisa = Task(
         description=f'Pesquisar e resumir informações relevantes sobre "{topico_usuario}" na Wikipedia.',
         expected_output='Resumo claro e informativo com no mínimo 100 palavras.',
         agent=pesquisador
     )
 
+    ## @brief Tarefa atribuída ao redator.
     tarefa_redacao = Task(
         description='Reescreva o resumo do Pesquisador em um artigo cativante com no mínimo 300 palavras, voltado para jovens adultos.',
         expected_output='Artigo envolvente com base no conteúdo pesquisado, com linguagem acessível.',
         agent=redator
     )
 
+    ## @brief Tarefa atribuída ao revisor.
     tarefa_revisao = Task(
         description='Revise o artigo escrito pelo Redator, corrigindo erros gramaticais e melhorando a fluidez textual.',
         expected_output='Versão final do artigo revisada e pronta para publicação.',
@@ -104,7 +106,7 @@ def criar_equipe(topico_usuario: str):
         output_file=f'articles/artigo.md'
     )
     
-    # Criação da equipe, composta pelos agentes e tarefas configuradas.
+    ## @brief Criação e retorno da equipe com os agentes e suas respectivas tarefas.
     equipe = Crew(
         agents=[pesquisador, redator, revisor],
         tasks=[tarefa_pesquisa, tarefa_redacao, tarefa_revisao],
