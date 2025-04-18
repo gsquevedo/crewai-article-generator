@@ -6,6 +6,7 @@ Este projeto é uma API desenvolvida com **FastAPI** que utiliza a **CrewAI** pa
 
 ## ✨ Tecnologias utilizadas
 
+- [Python](https://www.python.org/)
 - [FastAPI](https://fastapi.tiangolo.com/)
 - [Pydantic](https://docs.pydantic.dev/)
 - [CrewAI](https://docs.crewai.com/)
