@@ -16,12 +16,20 @@ Este projeto é uma API desenvolvida com **FastAPI** que utiliza a **CrewAI** pa
 
 ## 📁 Estrutura do Projeto
 
-├── main.py # Código principal da API 
-├── crew_config.py # Função de criação da equipe CrewAI
-├── wikipedia_tool #  # Diretório de ferramentas adicionais (ex: busca na Wikipedia)
-├── requirements.txt # Dependências do projeto 
-└── README.md # Documentação do projeto
+- `main.py`  
+  Código principal da API.
 
+- `crew_config.py`  
+  Função de criação da equipe CrewAI.
+
+- `wikipedia_tool/`  
+  Diretório de ferramentas adicionais (ex: busca na Wikipedia).
+
+- `requirements.txt`  
+  Dependências do projeto.
+
+- `README.md`  
+  Documentação do projeto.
 
 ## 🚀 Como executar o projeto
 
