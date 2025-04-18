@@ -50,6 +50,12 @@ A aplicação estará disponível em:
 Você também pode acessar a documentação interativa da API:
 🔍 http://127.0.0.1:8000/docs
 
+## 🌐 Repositório do Frontend
+
+Este projeto possui uma interface frontend que consome esta API. Você pode acessar o código do frontend aqui:
+
+- https://github.com/gsquevedo/crewai-article-generator-front
+
 ## 📬 Contato
 Caso tenha dúvidas, sugestões ou queira contribuir:
 
