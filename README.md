@@ -50,7 +50,7 @@ A aplicação estará disponível em:
 Você também pode acessar a documentação interativa da API:
 🔍 http://127.0.0.1:8000/docs
 
-### 📬 Contato
+## 📬 Contato
 Caso tenha dúvidas, sugestões ou queira contribuir:
 
 💼 Gabriele Soares Quevedo
